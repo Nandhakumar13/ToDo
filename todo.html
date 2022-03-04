@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>TODO List</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head> 
+<body>
+	<section class="todo-section">
+		<div class="todo-input-part">
+			<div class="input-field">
+				<form id="todo-form">
+					<input type="text" name="todo" id="todo-input">
+				</form>
+				<div class="input-btn">
+					<button id="add-btn">Add</button>
+				</div>
+				<div id="select-part">
+					<select id="filter-todo" onChange="filterTodo(event)">
+						<option value="all">All</option>
+						<option value="done">Done</option>
+						<option value="notdone">Not Done</option>
+					</select>
+				</div>
+			</div>
+			
+		</div>
+		<div class="todo-list-part">
+			<ul class="todo-list-container">
+				
+			</ul>
+		</div>
+	</section>
+</body>
+<script type="text/javascript">
+
+	const addBtn = document.getElementById("add-btn");
+	const inputElement = document.getElementById("todo-input");
+	const todoForm = document.getElementById("todo-form");
+	const selectTodo = document.getElementById("filter-todo");
+
+	const todoInputSection = document.querySelector(".todo-input-part");
+	const todoListSection = document. querySelector(".todo-list-part ul");
+
+	const todoDeleteBtn = document. querySelector(".todo-delete-btn");
+
+	errorMsg = document.createElement("p");
+
+	addBtn.addEventListener("click",todoList);
+
+	function todoList(){
+		let inputValue = inputElement.value;
+		// console.log(inputValue);
+		if(inputValue !== ""){
+			todoListElement = document.createElement("li");
+			todoListElement.setAttribute("class","todo-list notdone");
+			todoListElement.innerText = inputValue;
+
+
+			todoDeleteElement = document.createElement("a");
+			todoDeleteElement.setAttribute("class","todo-delete-btn");
+			todoDeleteElement.setAttribute("href","javascript:void(0);");
+			todoDeleteElement.setAttribute("onClick","deleteList(event);");
+			todoDeleteElement.innerText = "X";
+
+			todoCheckElement = document.createElement("input");
+			todoCheckElement.setAttribute("class","todo-check-btn");
+			todoCheckElement.setAttribute("type","checkbox");
+			todoCheckElement.setAttribute("onChange","doneList(event);");
+
+			todoListElement.appendChild(todoCheckElement);
+			todoListElement.appendChild(todoDeleteElement);
+			todoListSection.appendChild(todoListElement);
+
+			errorMsg.style.display="none";
+		}
+		else{
+			// alert("Enter Input");
+			
+			errorMsg.innerText = "*** enter value ***";
+			errorMsg.style.color="red";
+			errorMsg.style.display="block";
+
+			todoInputSection.appendChild(errorMsg);
+		}
+
+
+
+
+		todoForm.reset();
+	}
+
+// todoDeleteBtn.addEventListener("click",deleteList);
+
+function deleteList(event){
+
+	event.target.parentElement.remove();
+	// alert("yes");
+
+}
+
+function doneList(event){
+	if(event.target.checked == true){
+		event.target.parentElement.classList.add("done");
+		if(event.target.parentElement.classList.contains("notdone")){
+			event.target.parentElement.classList.remove("notdone");
+		}
+	}
+	else{
+		event.target.parentElement.classList.remove("done");
+		event.target.parentElement.classList.add("notdone");
+
+	}
+
+	
+}
+
+function filterTodo(event){
+	
+	// const todoListContainer = document.querySelector(".todo-list-container");
+
+	const todoLists = document.querySelectorAll(".todo-list");
+
+	// console.log(todoLists);
+	todoLists.forEach(function(todoList){
+
+		// console.log(todoList);
+
+		// console.log(event.target.value);
+		switch(event.target.value){
+
+			case "all": 
+			todoList.style.display ="flex";
+			break;
+
+			case "done": 
+			if(todoList.classList.contains("done")){
+				todoList.style.display="flex";
+			}
+			else{
+				todoList.style.display="none";
+			}
+			break;
+			case "notdone": 
+			if(todoList.classList.contains("notdone")){
+				todoList.style.display="flex";
+			}
+			else{
+				todoList.style.display="none";
+			}
+			break;
+		}
+
+	});
+}
+
+</script>
+</html>

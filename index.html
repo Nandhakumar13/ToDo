@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>JS Practices</title>
+	
+	<style type="text/css">
+	textarea{
+		outline: none;
+	}
+</style>
+
+</head>
+
+<body>
+
+
+	<form id="addElementForm" method="post">
+		<input type="text" name="message" id="my-textarea" value>
+		<button class="add-btn" type="button" onclick="addArrayElement()">Add</button>
+	</form>
+	
+	<div> <span class="result"></span> left</div>
+	<div id="result"></div>
+	
+
+
+
+
+
+</body>
+
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="script.js"></script>
+<script type="text/javascript">
+	var result = document.getElementById("result");
+	var addElementForm = document.getElementById("addElementForm");
+	var inputField = document.getElementById("my-textarea");
+	var addBtn = document.querySelector(".add-btn");
+
+	// addBtn.addEventListener("click",addArrayElement);
+	var values = ["nandha","name2"];
+	
+	var arrayLength = values.length;
+
+	function addArrayElement(){
+		var inputValue = inputField.value;
+		values.push(inputValue);
+		console.log(inputValue);
+		console.log(values);
+		// result.innerHTML = values;
+		addElementForm.reset();
+
+		values.map(value =>{
+			result.innerHTML += "<ul><li>"+value+"<li></ul>";
+		});
+	}
+	
+
+
+
+</script>
+</html>
